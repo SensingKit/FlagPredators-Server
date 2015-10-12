@@ -46,7 +46,7 @@ public class CTFServer{
 				//Connecting with client.
 				clientSocket = serverSocket.accept();
 				System.out.println("Connecting With A Client From IP Address: " + 
-									clientSocket.getInetAddress() + " is Connected.");
+					clientSocket.getInetAddress() + " is Connected.");
 				connectionThread = new Thread(new ConnectionThread(clientSocket));
 				connectionThread.start();
 				System.out.println("Create a thread for the connection of this client.");
@@ -112,7 +112,7 @@ public class CTFServer{
 					System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 					//Print out the String received.
 					System.out.println("Received JSON: " + clientJson + "\n
-										>>>>From Client Socket: " + clientSocket.toString());
+						>>>>From Client Socket: " + clientSocket.toString());
 					//Extract data from a request and create a data for responses.
 					inputData = new DataManager(clientJson);
 					outputData = this.executeCommand(inputData);
@@ -193,11 +193,11 @@ public class CTFServer{
 					isBroadcast = false;
 					//Capitalise the username.
 					String username = Character.toUpperCase(inputData.getName().charAt(0)) + 
-									  inputData.getName().substring(1);
+						inputData.getName().substring(1);
 					//Register a player for this client.
 					thisPlayer = new Player(idGenerator.generateId(), 
-											username, 
-											inputData.getLocation());
+						username, 
+						inputData.getLocation());
 					//Add this player into the list storing all the players.
 					allPlayers.add(thisPlayer);
 					/** RespondingProtocol <respond_id>
@@ -216,13 +216,13 @@ public class CTFServer{
 					//Create a Game.
 					//The game name(gameName) is builder's username.
 					thisGame = new CTFGame(idGenerator.generateGameId(), 
-											inputData.getId(), 
-											this.getPlayerById(inputData.getId()).getName(), 
-											inputData.getLocation(), 
-											inputData.getNoOfPlayers(), 
-											inputData.getNoOfFlags(), 
-											inputData.getGameBoundary(), 
-											inputData.hasJail());
+						inputData.getId(), 
+						this.getPlayerById(inputData.getId()).getName(), 
+						inputData.getLocation(), 
+						inputData.getNoOfPlayers(), 
+						inputData.getNoOfFlags(), 
+						inputData.getGameBoundary(), 
+						inputData.hasJail());
 					allGames.add(thisGame);
 					/** RespondingProtocol <game_initiated>
 					 * Data:
@@ -606,11 +606,12 @@ public class CTFServer{
 						data.putDistance(aDistance);
 						respondJsons.add(data.toJson());
 					}
-					System.out.println("LOCATION INFO=================================================================\n" +
-										"Player: " + thisPlayer.getId() + 
-										"[ " + thisPlayer.getName() + " ]\n" + 
-										"LAT: " + playerLat + " LNG: " + playerLng + 
-										"This Distance: " + aDistance);
+					System.out.println(
+						"LOCATION INFO=================================================================\n" +
+						"Player: " + thisPlayer.getId() + 
+						"[ " + thisPlayer.getName() + " ]\n" + 
+						"LAT: " + playerLat + " LNG: " + playerLng + 
+						"This Distance: " + aDistance);
 					return null;
 
 				default:
@@ -740,7 +741,7 @@ public class CTFServer{
 			 * > isRed
 			 * > isReady
 			 */
-			for(Player player : thisGame.getTeamRed().getPlayersInThisTeam()){ //** need to get player list
+			for(Player player : thisGame.getTeamRed().getPlayersInThisTeam()){ //Get player list
 				DataManager dataManager = new DataManager(RespondingProtocol.UPDATE_GAME_ROOM);
 				dataManager.putId(player.getId());
 				dataManager.putName(player.getName());
@@ -749,7 +750,7 @@ public class CTFServer{
 				dataForMultiResponding.add(dataManager);
 				System.out.println(dataManager.toString());
 			}
-			for(Player player : thisGame.getTeamBlue().getPlayersInThisTeam()){ //** need to get player list
+			for(Player player : thisGame.getTeamBlue().getPlayersInThisTeam()){ //Get player list
 				DataManager dataManager = new DataManager(RespondingProtocol.UPDATE_GAME_ROOM);
 				dataManager.putId(player.getId());
 				dataManager.putName(player.getName());
@@ -763,7 +764,7 @@ public class CTFServer{
 			}
 		}
 
-	//
+	//Send the info of this game.
 		void showGameRoomInfo(CTFGame thisGame){
 			/** RespondingProtocol <show_gameroom>
 			 * Data:
